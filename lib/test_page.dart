@@ -42,7 +42,7 @@ class _TestPageState extends State<TestPage> {
           answers.add(widget.test.test[indexList].fakeAnswer3.toString());
           answers.add(widget.test.test[indexList].fakeAnswer2.toString());
           answers.add(widget.test.test[indexList].fakeAnswer1.toString());
-          answers.sort();
+          answers.shuffle();
           return Container(
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height,

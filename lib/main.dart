@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:test_app_tut/test_model.dart';
 import 'package:test_app_tut/test_page.dart';
 
+import 'create_test_page.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -108,6 +109,12 @@ class _MyAppState extends State<MyApp> {
               ),
             );
           }
+        },
+      ),
+      floatingActionButton: IconButton(
+        icon: Icon(Icons.add),
+        onPressed: () {
+          Navigator.push(context, CupertinoPageRoute(builder: (context) => CreateTestPage(),));
         },
       ),
     );
