@@ -57,11 +57,16 @@ class _ResultsPageState extends State<ResultsPage> {
               backStrokeWidth: 24,
               maxValue: double.parse(widget.test.test.length.toString()),
               mergeMode: true,
-              // onGetText: (value) {
-              //   return Text(
-              //     '${value.toInt()}',
-              //   );
-              // },
+              onGetText: (value) {
+                double b = (value.toInt()/double.parse(widget.test.test.length.toString()))*100;
+                return Text(
+                  '${b}%',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 25
+                  ),
+                );
+              },
               progressColors: [Color(0xff39FF14)],
               backColor: Colors.red,
             ),

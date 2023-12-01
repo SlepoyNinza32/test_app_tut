@@ -11,6 +11,7 @@ import 'create_test_page.dart';
 import 'firebase_options.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
@@ -50,7 +51,10 @@ class _MyAppState extends State<MyApp> {
         builder: (context, snapshot) {
           if (snapshot.hasError) {
             return Center(child: Text('Error'));
-          } else {
+          }else if(!snapshot.hasData){
+            return Center(child: CircularProgressIndicator());
+          }
+          else {
             return Container(
               margin: EdgeInsets.only(top: 10,),
               width: MediaQuery.of(context).size.width,
@@ -111,8 +115,10 @@ class _MyAppState extends State<MyApp> {
           }
         },
       ),
-      floatingActionButton: IconButton(
-        icon: Icon(Icons.add),
+      floatingActionButton: FloatingActionButton(
+        child: const Icon(Icons.add),
+        backgroundColor: Colors.black12,
+        elevation: 1,
         onPressed: () {
           Navigator.push(context, CupertinoPageRoute(builder: (context) => CreateTestPage(),));
         },
