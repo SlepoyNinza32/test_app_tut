@@ -1,9 +1,12 @@
-import 'dart:convert';
+//import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:uuid/uuid.dart';
+
+import 'package:flutter/widgets.dart';
 import 'package:test_app_tut/test_model.dart';
 import 'package:test_app_tut/test_page.dart';
 
@@ -31,6 +34,11 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   CollectionReference testFire = FirebaseFirestore.instance.collection('tests');
   List<TestsModel> model = [];
+  TextEditingController countOfQuestionController = TextEditingController();
+  TextEditingController nameOfCourse = TextEditingController();
+  Uuid uuid = Uuid();
+
+  //String autoId = uuid.v4().toString();
 
   @override
   Widget build(BuildContext context) {
@@ -51,12 +59,13 @@ class _MyAppState extends State<MyApp> {
         builder: (context, snapshot) {
           if (snapshot.hasError) {
             return Center(child: Text('Error'));
-          }else if(!snapshot.hasData){
+          } else if (!snapshot.hasData) {
             return Center(child: CircularProgressIndicator());
-          }
-          else {
+          } else {
             return Container(
-              margin: EdgeInsets.only(top: 10,),
+              margin: EdgeInsets.only(
+                top: 10,
+              ),
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height,
               child: ListView.builder(
@@ -116,12 +125,68 @@ class _MyAppState extends State<MyApp> {
         },
       ),
       floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.add),
         backgroundColor: Colors.black12,
         elevation: 1,
         onPressed: () {
-          Navigator.push(context, CupertinoPageRoute(builder: (context) => CreateTestPage(),));
+          showDialog(
+            context: context,
+            builder: (context) => CupertinoAlertDialog(
+              title: Text('Create a new test'),
+              content: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: CupertinoTextField(
+                      controller: countOfQuestionController,
+                      placeholder: 'Write name of course',
+                      padding: EdgeInsets.all(16),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(24),
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: CupertinoTextField(
+                      controller: countOfQuestionController,
+                      placeholder: 'Write count of questions',
+                      padding: EdgeInsets.all(16),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(24),
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              actions: [
+                Row(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: CupertinoButton(
+                        color: Colors.black12,
+                        child: const Text('Cansel'),
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                      ),
+                    ),
+                    MaterialButton(
+                      minWidth: 20,
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: const Text('Create'),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          );
         },
+        child: const Icon(Icons.add),
       ),
     );
   }

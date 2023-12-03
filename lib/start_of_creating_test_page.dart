@@ -11,7 +11,13 @@ class _StartOfCreatingTestPageState extends State<StartOfCreatingTestPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      body: Container(
+        child: Column(
+          children: [
 
+          ],
+        ),
+      ),
     );
   }
 }
