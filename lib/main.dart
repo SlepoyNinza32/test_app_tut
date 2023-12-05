@@ -165,7 +165,7 @@ class _MyAppState extends State<MyApp> {
                   children: [
                     Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: CupertinoButton(
+                      child: MaterialButton(
                         color: Colors.black12,
                         child: const Text('Cansel'),
                         onPressed: () {
@@ -173,12 +173,24 @@ class _MyAppState extends State<MyApp> {
                         },
                       ),
                     ),
-                    MaterialButton(
-                      minWidth: 20,
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      child: const Text('Create'),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: MaterialButton(
+                        color: Colors.black12,
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            CupertinoPageRoute(
+                              builder: (context) => CreateTestPage(
+                                lengthOfQuestions: int.parse(
+                                    countOfQuestionController.value.text),
+                                nameOfTest: nameOfCourse.value.text,
+                              ),
+                            ),
+                          );
+                        },
+                        child: const Text('Create'),
+                      ),
                     ),
                   ],
                 ),

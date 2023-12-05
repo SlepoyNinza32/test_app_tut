@@ -25,8 +25,8 @@ class _ResultsPageState extends State<ResultsPage> {
     super.initState();
     print(widget.test.test);
     print(widget.answers);
-    for (int i = 0; i < widget.test.test.length; i++) {
-      if (widget.answers[i] == widget.test.test[i].trueAnswer) {
+    for (int i = 0; i < widget.test.test!.length; i++) {
+      if (widget.answers[i] == widget.test.test![i].trueAnswer) {
         trueAnswers++;
       } else {
         fakeAnswers++;
@@ -55,10 +55,10 @@ class _ResultsPageState extends State<ResultsPage> {
                   ValueNotifier<double>(double.parse(trueAnswers.toString())),
               progressStrokeWidth: 24,
               backStrokeWidth: 24,
-              maxValue: double.parse(widget.test.test.length.toString()),
+              maxValue: double.parse(widget.test.test!.length.toString()),
               mergeMode: true,
               onGetText: (value) {
-                double b = (value.toInt()/double.parse(widget.test.test.length.toString()))*100;
+                double b = (value.toInt()/double.parse(widget.test.test!.length.toString()))*100;
                 return Text(
                   '${b}%',
                   style: TextStyle(

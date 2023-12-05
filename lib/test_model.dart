@@ -1,10 +1,25 @@
 // import 'dart:convert';
 // import 'dart:js_interop';
+import 'package:json_annotation/json_annotation.dart';
 
+@JsonSerializable(explicitToJson: true)
 class TestsModel {
-  String id;
-  String name;
-  List<Test> test;
+  String? id;
+  String? name;
+  List<Test>? test;
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    data['id'] = id;
+    data['name'] = name;
+    data['test'] = test;
+    return data;
+  }
+  TestsModel.fromJson(Map<String, dynamic> json) {
+    name = json['name'];
+    id = json['id'];
+    test = json['test'];
+  }
 
   TestsModel({
     required this.id,

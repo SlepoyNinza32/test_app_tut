@@ -22,7 +22,7 @@ class _TestPageState extends State<TestPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          widget.test.name.toUpperCase(),
+          widget.test.name!.toUpperCase(),
           style: TextStyle(
             color: Colors.grey,
             fontWeight: FontWeight.bold,
@@ -38,10 +38,10 @@ class _TestPageState extends State<TestPage> {
         itemBuilder: (context, ind) {
           //indexList = ind;
           answers.clear();
-          answers.add(widget.test.test[indexList].trueAnswer.toString());
-          answers.add(widget.test.test[indexList].fakeAnswer3.toString());
-          answers.add(widget.test.test[indexList].fakeAnswer2.toString());
-          answers.add(widget.test.test[indexList].fakeAnswer1.toString());
+          answers.add(widget.test.test![indexList].trueAnswer.toString());
+          answers.add(widget.test.test![indexList].fakeAnswer3.toString());
+          answers.add(widget.test.test![indexList].fakeAnswer2.toString());
+          answers.add(widget.test.test![indexList].fakeAnswer1.toString());
           answers.shuffle();
           return Container(
             width: MediaQuery.of(context).size.width,
@@ -68,7 +68,7 @@ class _TestPageState extends State<TestPage> {
                   height: MediaQuery.of(context).size.width * 0.3,
                   child: Center(
                     child: Text(
-                      '${widget.test.test[indexList].question}',
+                      '${widget.test.test![indexList].question}',
                       style: TextStyle(
                         fontSize: 25,
                         fontWeight: FontWeight.bold,
@@ -88,7 +88,7 @@ class _TestPageState extends State<TestPage> {
                           () {
                             listOfAnswers.add(answers[index]);
                             // print(widget.test.test.length);
-                            if (widget.test.test.length-1 > indexList) {
+                            if (widget.test.test!.length-1 > indexList) {
                               indexList+=1;
                             } else {
                               Navigator.push(
@@ -142,7 +142,7 @@ class _TestPageState extends State<TestPage> {
             ),
           );
         },
-        itemCount: widget.test.test.length,
+        itemCount: widget.test.test!.length,
       ),
     );
   }

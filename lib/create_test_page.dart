@@ -1,9 +1,19 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:test_app_tut/main.dart';
 import 'package:test_app_tut/test_model.dart';
 
 class CreateTestPage extends StatefulWidget {
-  const CreateTestPage({super.key});
+  CreateTestPage({
+    super.key,
+    required this.lengthOfQuestions,
+    required this.nameOfTest,
+  });
+
+  int lengthOfQuestions;
+  String nameOfTest;
 
   @override
   State<CreateTestPage> createState() => _CreateTestPageState();
@@ -11,20 +21,29 @@ class CreateTestPage extends StatefulWidget {
 
 class _CreateTestPageState extends State<CreateTestPage> {
   int countOfQuestions = 1;
-  List<Test> tests= [];
+  List<Test> tests = [];
+  List<ControllersModel> controlers = [];
   TextEditingController questionController = TextEditingController();
   TextEditingController trueAnswerCont = TextEditingController();
   TextEditingController fakeAnswer1Cont = TextEditingController();
   TextEditingController fakeAnswer2Cont = TextEditingController();
   TextEditingController fakeAnswer3Cont = TextEditingController();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    controlers =
+        List.generate(widget.lengthOfQuestions, (index) => ControllersModel());
+  }
+
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       backgroundColor: Colors.yellow[50],
       appBar: AppBar(
         title: Text(
-          'Quiz App',
+          '${widget.nameOfTest}',
           style: TextStyle(
             color: Colors.grey,
             fontWeight: FontWeight.bold,
@@ -42,127 +61,131 @@ class _CreateTestPageState extends State<CreateTestPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Container(
-                width: MediaQuery.of(context).size.width - 16,
-                height: MediaQuery.of(context).size.height * 0.6,
-                decoration: BoxDecoration(
-                  color: Colors.black12,
-                  borderRadius: BorderRadius.circular(30),
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(
-                        bottom: 8.0,
-                        right: 8.0,
-                        left: 8.0,
-                        top: 16.0
+              ListView.builder(
+                  itemCount: controlers.length,
+                  itemBuilder: (context, index) {
+                    return Container(
+                      width: MediaQuery.of(context).size.width - 16,
+                      height: MediaQuery.of(context).size.height * 0.6,
+                      decoration: BoxDecoration(
+                        color: Colors.black12,
+                        borderRadius: BorderRadius.circular(30),
                       ),
-                      child: Text(
-                        'Test: 1',
-                        style: TextStyle(
-                            fontSize: 25,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: CupertinoTextField(
-                        controller: questionController,
-                        placeholder: 'Question',
-                        padding: EdgeInsets.all(16),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(24),
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: CupertinoTextField(
-                        controller: trueAnswerCont,
-                        placeholder: 'Correct answer',
-                        padding: EdgeInsets.all(16),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(24),
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: CupertinoTextField(
-                        controller: fakeAnswer1Cont,
-                        placeholder: 'Wrong answer 1',
-                        padding: EdgeInsets.all(16),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(24),
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: CupertinoTextField(
-                        controller: fakeAnswer2Cont,
-                        placeholder: 'Wrong answer 2',
-                        padding: EdgeInsets.all(16),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(24),
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: CupertinoTextField(
-                        controller: fakeAnswer3Cont,
-                        placeholder: 'Wrong answer 3',
-                        padding: EdgeInsets.all(16),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(24),
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          InkWell(
-                            onTap: () {},
-                            child: Icon(
-                              Icons.arrow_back,
-                              color: Colors.white,
-                              size: 40,
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                bottom: 8.0, right: 8.0, left: 8.0, top: 16.0),
+                            child: Text(
+                              'Test: ${index}',
+                              style: TextStyle(
+                                  fontSize: 25,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white),
                             ),
                           ),
-                          InkWell(
-                            onTap: () {},
-                            child: Icon(
-                              Icons.add_box_outlined,
-                              color: Colors.white,
-                              size: 40,
+                          Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: CupertinoTextField(
+                              controller: controlers[index].questionController,
+                              placeholder: 'Question',
+                              padding: EdgeInsets.all(16),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(24),
+                                color: Colors.white,
+                              ),
                             ),
                           ),
-                          InkWell(
-                            onTap: () {
-                            },
-                            child: Icon(
-                              Icons.arrow_forward,
-                              color: Colors.white,
-                              size: 40,
+                          Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: CupertinoTextField(
+                              controller: controlers[index].trueAnswerCont,
+                              placeholder: 'Correct answer',
+                              padding: EdgeInsets.all(16),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(24),
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: CupertinoTextField(
+                              controller: controlers[index].fakeAnswer1Cont,
+                              placeholder: 'Wrong answer 1',
+                              padding: EdgeInsets.all(16),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(24),
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: CupertinoTextField(
+                              controller: controlers[index].fakeAnswer2Cont,
+                              placeholder: 'Wrong answer 2',
+                              padding: EdgeInsets.all(16),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(24),
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: CupertinoTextField(
+                              controller: controlers[index].fakeAnswer3Cont,
+                              placeholder: 'Wrong answer 3',
+                              padding: EdgeInsets.all(16),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(24),
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                CupertinoButton(
+                                  child: Text(''),
+                                  onPressed: () {
+                                    TestsModel test = TestsModel(
+                                      id: '',
+                                      name: '',
+                                      test: List.generate(
+                                        widget.lengthOfQuestions,
+                                            (index) => Test(
+                                          fakeAnswer1: controlers[index].fakeAnswer1Cont?.value.text??'',
+                                          fakeAnswer2: controlers[index].fakeAnswer2Cont?.value.text??'',
+                                          fakeAnswer3: controlers[index].fakeAnswer3Cont?.value.text??'',
+                                          question: controlers[index].questionController?.value.text??'',
+                                          trueAnswer: controlers[index].trueAnswerCont?.value.text??'',
+                                        ),
+                                      ),
+                                    );
+                                    FirebaseFirestore.instance
+                                        .collection('tests')
+                                        .add(
+                                          test.toJson(),
+                                        );
+                                    Navigator.push(
+                                        context,
+                                        CupertinoPageRoute(
+                                          builder: (context) => MyApp(),
+                                        ));
+                                  },
+                                ),
+                              ],
                             ),
                           ),
                         ],
                       ),
-                    ),
-                  ],
-                ),
-              ),
+                    );
+                  }),
             ],
           ),
         ),
@@ -201,3 +224,19 @@ class _CreateTestPageState extends State<CreateTestPage> {
 // ),
 // ),
 // ),
+
+class ControllersModel {
+  TextEditingController? questionController = TextEditingController();
+  TextEditingController? trueAnswerCont = TextEditingController();
+  TextEditingController? fakeAnswer1Cont = TextEditingController();
+  TextEditingController? fakeAnswer2Cont = TextEditingController();
+  TextEditingController? fakeAnswer3Cont = TextEditingController();
+
+  ControllersModel({
+    this.questionController,
+    this.trueAnswerCont,
+    this.fakeAnswer1Cont,
+    this.fakeAnswer2Cont,
+    this.fakeAnswer3Cont,
+  });
+}
