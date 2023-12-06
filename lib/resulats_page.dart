@@ -119,7 +119,7 @@ class _ResultsPageState extends State<ResultsPage> {
                           offset: Offset(0, 3), // changes position of shadow
                         ),
                       ],
-                      color: Colors.teal,
+                      color: Color(0xff379683),
                       borderRadius: BorderRadius.circular(15),
                     ),
                     child: Center(
@@ -179,7 +179,7 @@ class _ResultsPageState extends State<ResultsPage> {
                           offset: Offset(0, 3), // changes position of shadow
                         ),
                       ],
-                      color: Colors.teal,
+                      color: Color(0xff379683),
                       borderRadius: BorderRadius.circular(15),
                     ),
                     width: MediaQuery.of(context).size.width * 0.45,

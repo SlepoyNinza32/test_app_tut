@@ -24,14 +24,14 @@ class _TestPageState extends State<TestPage> {
         title: Text(
           widget.test.name!.toUpperCase(),
           style: TextStyle(
-            color: Colors.grey,
+            color: Color(0xffEDF5E1),
             fontWeight: FontWeight.bold,
           ),
         ),
         centerTitle: true,
-        backgroundColor: Colors.red[50],
+        backgroundColor: Color(0xff05386B),
       ),
-      backgroundColor: Colors.yellow[50],
+      backgroundColor: Color(0xff5CDB95),
       body: ListView.builder(
         physics: NeverScrollableScrollPhysics(),
         //scrollDirection: Axis.horizontal,
@@ -71,6 +71,7 @@ class _TestPageState extends State<TestPage> {
                       '${widget.test.test![indexList].question}',
                       style: TextStyle(
                         fontSize: 25,
+                        color: Color(0xffEDF5E1),
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -128,6 +129,7 @@ class _TestPageState extends State<TestPage> {
                           child: Text(
                             '${answers[index]}',
                             style: TextStyle(
+                              color: Color(0xffEDF5E1),
                               fontWeight: FontWeight.bold,
                               fontSize: 25,
                             ),

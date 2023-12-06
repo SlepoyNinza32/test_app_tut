@@ -43,17 +43,18 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.yellow[50],
+      backgroundColor: Color(0xff5CDB95),
       appBar: AppBar(
-          title: Text(
-            'Quiz App',
-            style: TextStyle(
-              color: Colors.grey,
-              fontWeight: FontWeight.bold,
-            ),
+        title: Text(
+          'Quiz App',
+          style: TextStyle(
+            color: Color(0xffEDF5E1),
+            fontWeight: FontWeight.bold,
           ),
-          centerTitle: true,
-          backgroundColor: Colors.red[50]),
+        ),
+        centerTitle: true,
+        backgroundColor: Color(0xff05386B),
+      ),
       body: FutureBuilder(
         future: testFire.get(),
         builder: (context, snapshot) {
@@ -72,7 +73,7 @@ class _MyAppState extends State<MyApp> {
                 itemBuilder: (context, index) => InkWell(
                   hoverColor: Colors.transparent,
                   onTap: () {
-                    print(snapshot.data!.docs[index].get('id'));
+                    //print(snapshot.data!.docs[index].get('id'));
                     print(snapshot.data!.docs[index].get('name'));
 
                     ///print(snapshot.data!.docs[index].data().toString().contains('questions'));
@@ -84,7 +85,7 @@ class _MyAppState extends State<MyApp> {
                       CupertinoPageRoute(
                         builder: (context) => TestPage(
                           test: TestsModel(
-                            id: snapshot.data!.docs[index].get('id'),
+                            //id: snapshot.data!.docs[index].get('id'),
                             name: snapshot.data!.docs[index].get('name'),
                             test: ListJsonOfQuestions(
                                 snapshot.data!.docs[index].get('test')),
@@ -99,7 +100,7 @@ class _MyAppState extends State<MyApp> {
                     width: MediaQuery.of(context).size.width,
                     height: MediaQuery.of(context).size.height * 0.1,
                     decoration: BoxDecoration(
-                      color: Colors.black12,
+                      color: Color(0xff379683),
                       borderRadius: BorderRadius.circular(13),
                     ),
                     child: Row(
@@ -125,7 +126,7 @@ class _MyAppState extends State<MyApp> {
         },
       ),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.black12,
+        backgroundColor: Color(0xff379683),
         elevation: 1,
         onPressed: () {
           showDialog(
@@ -137,7 +138,7 @@ class _MyAppState extends State<MyApp> {
                   Padding(
                     padding: const EdgeInsets.all(10.0),
                     child: CupertinoTextField(
-                      controller: countOfQuestionController,
+                      controller: nameOfCourse,
                       placeholder: 'Write name of course',
                       padding: EdgeInsets.all(16),
                       decoration: BoxDecoration(
@@ -176,7 +177,7 @@ class _MyAppState extends State<MyApp> {
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: MaterialButton(
-                        color: Colors.black12,
+                        color: Color(0xff379683),
                         onPressed: () {
                           Navigator.push(
                             context,
@@ -200,6 +201,7 @@ class _MyAppState extends State<MyApp> {
         },
         child: const Icon(Icons.add),
       ),
+      //drawer: Draw,
     );
   }
 }
