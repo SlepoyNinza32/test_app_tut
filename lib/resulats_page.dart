@@ -1,9 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:simple_circular_progress_bar/simple_circular_progress_bar.dart';
-import 'package:test_app_tut/main.dart';
 import 'package:test_app_tut/test_model.dart';
 import 'package:test_app_tut/test_page.dart';
+
+import 'main_page.dart';
 
 class ResultsPage extends StatefulWidget {
   ResultsPage({super.key, required this.answers, required this.test});
@@ -32,8 +33,8 @@ class _ResultsPageState extends State<ResultsPage> {
         fakeAnswers++;
       }
     }
-    print('trueAnswers ' + trueAnswers.toString());
-    print('fakeAnswers ' + fakeAnswers.toString());
+    print('trueAnswers $trueAnswers');
+    print('fakeAnswers $fakeAnswers');
   }
 
   @override
@@ -42,7 +43,7 @@ class _ResultsPageState extends State<ResultsPage> {
     // print(widget.answers);
     return Scaffold(
       backgroundColor: Colors.yellow[50],
-      body: Container(
+      body: SizedBox(
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
         child: Column(
@@ -60,24 +61,24 @@ class _ResultsPageState extends State<ResultsPage> {
               onGetText: (value) {
                 double b = (value.toInt()/double.parse(widget.test.test!.length.toString()))*100;
                 return Text(
-                  '${b}%',
-                  style: TextStyle(
+                  '$b%',
+                  style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 25
                   ),
                 );
               },
-              progressColors: [Color(0xff39FF14)],
+              progressColors: const [Color(0xff39FF14)],
               backColor: Colors.red,
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
-                'Correct answers: ${trueAnswers}',
-                style: TextStyle(
+                'Correct answers: $trueAnswers',
+                style: const TextStyle(
                   color: Colors.green,
                   fontWeight: FontWeight.bold,
                   fontSize: 25,
@@ -87,8 +88,8 @@ class _ResultsPageState extends State<ResultsPage> {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
-                'Wrong answers: ${fakeAnswers}',
-                style: TextStyle(
+                'Wrong answers: $fakeAnswers',
+                style: const TextStyle(
                   color: Colors.red,
                   fontWeight: FontWeight.bold,
                   fontSize: 25,
@@ -109,20 +110,22 @@ class _ResultsPageState extends State<ResultsPage> {
                     );
                   },
                   child: Container(
-                    margin: EdgeInsets.all(8),
+                    margin: const EdgeInsets.all(8),
                     decoration: BoxDecoration(
                       boxShadow: [
                         BoxShadow(
                           color: Colors.grey.withOpacity(0.5),
                           spreadRadius: 5,
                           blurRadius: 7,
-                          offset: Offset(0, 3), // changes position of shadow
+                          offset: const Offset(0, 3), // changes position of shadow
                         ),
                       ],
-                      color: Color(0xff379683),
+                      color: const Color(0xff379683),
                       borderRadius: BorderRadius.circular(15),
                     ),
-                    child: Center(
+                    width: MediaQuery.of(context).size.width * 0.45,
+                    height: MediaQuery.of(context).size.width * 0.2,
+                    child: const Center(
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
@@ -138,8 +141,6 @@ class _ResultsPageState extends State<ResultsPage> {
                         ],
                       ),
                     ),
-                    width: MediaQuery.of(context).size.width * 0.45,
-                    height: MediaQuery.of(context).size.width * 0.2,
                   ),
                 ),
                 InkWell(
@@ -147,13 +148,28 @@ class _ResultsPageState extends State<ResultsPage> {
                     Navigator.pushAndRemoveUntil(
                       context,
                       CupertinoPageRoute(
-                        builder: (context) => MyApp(),
+                        builder: (context) => const MyApp(),
                       ),
                       (route) => false,
                     );
                   },
                   child: Container(
-                    child: Center(
+                    margin: const EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.5),
+                          spreadRadius: 5,
+                          blurRadius: 7,
+                          offset: const Offset(0, 3), // changes position of shadow
+                        ),
+                      ],
+                      color: const Color(0xff379683),
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    width: MediaQuery.of(context).size.width * 0.45,
+                    height: MediaQuery.of(context).size.width * 0.2,
+                    child: const Center(
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
@@ -169,21 +185,6 @@ class _ResultsPageState extends State<ResultsPage> {
                         ],
                       ),
                     ),
-                    margin: EdgeInsets.all(8),
-                    decoration: BoxDecoration(
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.5),
-                          spreadRadius: 5,
-                          blurRadius: 7,
-                          offset: Offset(0, 3), // changes position of shadow
-                        ),
-                      ],
-                      color: Color(0xff379683),
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                    width: MediaQuery.of(context).size.width * 0.45,
-                    height: MediaQuery.of(context).size.width * 0.2,
                   ),
                 ),
               ],

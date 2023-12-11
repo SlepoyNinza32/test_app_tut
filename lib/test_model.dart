@@ -4,25 +4,28 @@ import 'package:json_annotation/json_annotation.dart';
 
 @JsonSerializable(explicitToJson: true)
 class TestsModel {
-  // String? id;
+  String? id;
   String? name;
+  String? about;
   List<Test>? test;
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     //data['id'] = id;
     data['name'] = name;
+    data['about'] = about;
     data['test'] = test;
     return data;
   }
   TestsModel.fromJson(Map<String, dynamic> json) {
     name = json['name'];
-    //id = json['id'];
+    about = json['about'];
     test = json['test'];
   }
 
   TestsModel({
-    //required this.id,
+    required this.about,
+    this.id,
     required this.name,
     required this.test,
   });
@@ -52,7 +55,7 @@ class Test {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['question'] = question;
     data['fakeAnswer1'] = fakeAnswer1;
     data['fakeAnswer2'] = fakeAnswer2;

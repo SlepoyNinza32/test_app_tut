@@ -1,20 +1,19 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:test_app_tut/main.dart';
 import 'package:test_app_tut/test_model.dart';
-import 'package:uuid/uuid.dart';
 
 class CreateTestPage extends StatefulWidget {
   CreateTestPage({
     super.key,
     required this.lengthOfQuestions,
     required this.nameOfTest,
+    required this.about,
   });
 
   int lengthOfQuestions;
   String nameOfTest;
+  String about;
 
   @override
   State<CreateTestPage> createState() => _CreateTestPageState();
@@ -44,46 +43,46 @@ class _CreateTestPageState extends State<CreateTestPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xff5CDB95),
+      backgroundColor: const Color(0xff5CDB95),
       appBar: AppBar(
         title: Text(
-          '${widget.nameOfTest}',
-          style: TextStyle(
+          widget.nameOfTest,
+          style: const TextStyle(
             color: Color(0xffEDF5E1),
             fontWeight: FontWeight.bold,
           ),
         ),
         centerTitle: true,
-        backgroundColor: Color(0xff05386B),
+        backgroundColor: const Color(0xff05386B),
       ),
       body: FutureBuilder(
         future: controlers,
         builder:(context, snapshot) {
          if(snapshot.hasData){
            return SingleChildScrollView(
-             physics: RangeMaintainingScrollPhysics(),
+             physics: const RangeMaintainingScrollPhysics(),
              child: Container(
                width: MediaQuery.of(context).size.width,
                height: MediaQuery.of(context).size.height,
-               padding: EdgeInsets.all(8),
+               padding: const EdgeInsets.all(8),
                child: Column(
                  mainAxisAlignment: MainAxisAlignment.center,
                  children: [
-                   Container(
+                   SizedBox(
                      width: MediaQuery.of(context).size.width,
                      height: MediaQuery.of(context).size.height * 0.8,
                      child: ListView.builder(
-                         physics: PageScrollPhysics(),
+                         physics: const PageScrollPhysics(),
                          scrollDirection: Axis.horizontal,
                          itemCount: snapshot.data?.length,
                          itemBuilder: (context, index) {
                            return Container(
-                             margin: EdgeInsets.all(8),
-                             padding: EdgeInsets.all(8),
+                             margin: const EdgeInsets.all(8),
+                             padding: const EdgeInsets.all(8),
                              width: MediaQuery.of(context).size.width - 16,
                              height: MediaQuery.of(context).size.height * 0.5,
                              decoration: BoxDecoration(
-                               color: Color(0xff379683),
+                               color: const Color(0xff379683),
                                borderRadius: BorderRadius.circular(30),
                              ),
                              child: Column(
@@ -98,7 +97,7 @@ class _CreateTestPageState extends State<CreateTestPage> {
                                        top: 16.0),
                                    child: Text(
                                      'Test: ${index + 1}',
-                                     style: TextStyle(
+                                     style: const TextStyle(
                                          fontSize: 25,
                                          fontWeight: FontWeight.bold,
                                          color: Colors.white),
@@ -110,7 +109,7 @@ class _CreateTestPageState extends State<CreateTestPage> {
                                      controller:
                                      snapshot.data?[index].questionController,
                                      placeholder: 'Question',
-                                     padding: EdgeInsets.all(16),
+                                     padding: const EdgeInsets.all(16),
                                      decoration: BoxDecoration(
                                        borderRadius: BorderRadius.circular(24),
                                        color: Colors.white,
@@ -122,7 +121,7 @@ class _CreateTestPageState extends State<CreateTestPage> {
                                    child: CupertinoTextField(
                                      controller: snapshot.data?[index].trueAnswerCont,
                                      placeholder: 'Correct answer',
-                                     padding: EdgeInsets.all(16),
+                                     padding: const EdgeInsets.all(16),
                                      decoration: BoxDecoration(
                                        borderRadius: BorderRadius.circular(24),
                                        color: Colors.white,
@@ -134,7 +133,7 @@ class _CreateTestPageState extends State<CreateTestPage> {
                                    child: CupertinoTextField(
                                      controller: snapshot.data?[index].fakeAnswer1Cont,
                                      placeholder: 'Wrong answer 1',
-                                     padding: EdgeInsets.all(16),
+                                     padding: const EdgeInsets.all(16),
                                      decoration: BoxDecoration(
                                        borderRadius: BorderRadius.circular(24),
                                        color: Colors.white,
@@ -146,7 +145,7 @@ class _CreateTestPageState extends State<CreateTestPage> {
                                    child: CupertinoTextField(
                                      controller: snapshot.data?[index].fakeAnswer2Cont,
                                      placeholder: 'Wrong answer 2',
-                                     padding: EdgeInsets.all(16),
+                                     padding: const EdgeInsets.all(16),
                                      decoration: BoxDecoration(
                                        borderRadius: BorderRadius.circular(24),
                                        color: Colors.white,
@@ -158,7 +157,7 @@ class _CreateTestPageState extends State<CreateTestPage> {
                                    child: CupertinoTextField(
                                      controller: snapshot.data?[index].fakeAnswer3Cont,
                                      placeholder: 'Wrong answer 3',
-                                     padding: EdgeInsets.all(16),
+                                     padding: const EdgeInsets.all(16),
                                      decoration: BoxDecoration(
                                        borderRadius: BorderRadius.circular(24),
                                        color: Colors.white,
@@ -171,28 +170,28 @@ class _CreateTestPageState extends State<CreateTestPage> {
                          }),
                    ),
                    CupertinoButton(
-                     color: Color(0xff05386B),
-                     child: Text('Create'),
+                     color: const Color(0xff05386B),
+                     child: const Text('Create'),
                      onPressed: () {
                        // Uuid uuid = Uuid();
                        // String ss = uuid.v4();
                        //FirebaseFirestore.instance.collection('test');
                        TestsModel test = TestsModel(
-                         //id: '',
-                         name: '${widget.nameOfTest}',
+                         about: widget.about,
+                         name: widget.nameOfTest,
                          test: List.generate(
                            widget.lengthOfQuestions,
                                (index) => Test(
                              fakeAnswer1:
-                             snapshot.data?[index].fakeAnswer1Cont?.value.text,
+                             snapshot.data?[index].fakeAnswer1Cont.value.text,
                              fakeAnswer2:
-                             snapshot.data?[index].fakeAnswer2Cont?.value.text,
+                             snapshot.data?[index].fakeAnswer2Cont.value.text,
                              fakeAnswer3:
-                             snapshot.data?[index].fakeAnswer3Cont?.value.text,
+                             snapshot.data?[index].fakeAnswer3Cont.value.text,
                              question:
-                             snapshot.data?[index].questionController?.value.text,
+                             snapshot.data?[index].questionController.value.text,
                              trueAnswer:
-                             snapshot.data?[index].trueAnswerCont?.value.text,
+                             snapshot.data?[index].trueAnswerCont.value.text,
                            ),
                          ),
                        );
@@ -231,7 +230,13 @@ class _CreateTestPageState extends State<CreateTestPage> {
            );
          }
          else{
-           return Text(snapshot.error.toString());
+           print(snapshot.error.toString());
+           return const Center(
+             child: CircularProgressIndicator(
+               color: Color(0xff05386B),
+               backgroundColor: Color(0xff5CDB95),
+             ),
+           );
          }
         }
       ),

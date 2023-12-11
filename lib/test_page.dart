@@ -23,17 +23,17 @@ class _TestPageState extends State<TestPage> {
       appBar: AppBar(
         title: Text(
           widget.test.name!.toUpperCase(),
-          style: TextStyle(
+          style: const TextStyle(
             color: Color(0xffEDF5E1),
             fontWeight: FontWeight.bold,
           ),
         ),
         centerTitle: true,
-        backgroundColor: Color(0xff05386B),
+        backgroundColor: const Color(0xff05386B),
       ),
-      backgroundColor: Color(0xff5CDB95),
+      backgroundColor: const Color(0xff5CDB95),
       body: ListView.builder(
-        physics: NeverScrollableScrollPhysics(),
+        physics: const NeverScrollableScrollPhysics(),
         //scrollDirection: Axis.horizontal,
         itemBuilder: (context, ind) {
           //indexList = ind;
@@ -43,7 +43,7 @@ class _TestPageState extends State<TestPage> {
           answers.add(widget.test.test![indexList].fakeAnswer2.toString());
           answers.add(widget.test.test![indexList].fakeAnswer1.toString());
           answers.shuffle();
-          return Container(
+          return SizedBox(
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height,
             child: Column(
@@ -51,14 +51,14 @@ class _TestPageState extends State<TestPage> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Container(
-                  margin: EdgeInsets.all(8),
+                  margin: const EdgeInsets.all(8),
                   decoration: BoxDecoration(
                     boxShadow: [
                       BoxShadow(
                         color: Colors.grey.withOpacity(0.5),
                         spreadRadius: 5,
                         blurRadius: 7,
-                        offset: Offset(0, 3), // changes position of shadow
+                        offset: const Offset(0, 3), // changes position of shadow
                       ),
                     ],
                     color: Colors.purple[800],
@@ -69,7 +69,7 @@ class _TestPageState extends State<TestPage> {
                   child: Center(
                     child: Text(
                       '${widget.test.test![indexList].question}',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 25,
                         color: Color(0xffEDF5E1),
                         fontWeight: FontWeight.bold,
@@ -77,11 +77,11 @@ class _TestPageState extends State<TestPage> {
                     ),
                   ),
                 ),
-                Container(
+                SizedBox(
                   width: MediaQuery.of(context).size.width,
                   height: MediaQuery.of(context).size.width,
                   child: GridView.builder(
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2),
                     itemBuilder: (context, index) => InkWell(
                       onTap: () {
@@ -103,7 +103,7 @@ class _TestPageState extends State<TestPage> {
                         );
                       },
                       child: Container(
-                        margin: EdgeInsets.all(8),
+                        margin: const EdgeInsets.all(8),
                         width: MediaQuery.of(context).size.width * 0.4,
                         height: MediaQuery.of(context).size.width * 0.4,
                         decoration: BoxDecoration(
@@ -113,7 +113,7 @@ class _TestPageState extends State<TestPage> {
                               spreadRadius: 5,
                               blurRadius: 7,
                               offset:
-                                  Offset(0, 3), // changes position of shadow
+                                  const Offset(0, 3), // changes position of shadow
                             ),
                           ],
                           color: index == 0
@@ -127,8 +127,8 @@ class _TestPageState extends State<TestPage> {
                         ),
                         child: Center(
                           child: Text(
-                            '${answers[index]}',
-                            style: TextStyle(
+                            answers[index],
+                            style: const TextStyle(
                               color: Color(0xffEDF5E1),
                               fontWeight: FontWeight.bold,
                               fontSize: 25,
